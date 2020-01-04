@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by hsl on 2020-01-02
@@ -10,6 +12,31 @@ import java.util.ArrayList;
  */
 public class Num26 {
     public ArrayList<String> permutation(String str){
+        ArrayList<String> list = new ArrayList<>();
+        if(!str.isEmpty()){
+            PermutationHelper(str.toCharArray(),0,list);
+        }
+        return list;
+    }
 
+    private void PermutationHelper(char[] chars,int i,ArrayList<String> list){
+        if(i == chars.length-1){
+            list.add(String.valueOf(chars));
+        }else{
+            Set<Character> characters = new HashSet<>();
+            for (int j = i;j < chars.length-1;j++){
+                if(j == i || !characters.contains(chars[j])){
+                    characters.add(chars[j]);
+                    swap(chars,i,j);
+                    PermutationHelper(chars,i+1,list);
+                    swap(chars,i,j);
+                }
+            }
+        }
+    }
+    private void swap(char[] arr,int a,int b){
+        char temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
 }
